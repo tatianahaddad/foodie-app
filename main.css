@@ -1,0 +1,19 @@
+.container {
+  height: 600px;
+  width: auto;
+  border: black solid;
+}
+
+h1, h2 {
+  text-align: center;
+  margin: 50px;
+}
+
+#js-form {
+  display: flex;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
