@@ -1,16 +1,71 @@
+'use strict';
+
 const apiKey = "611c404120c14c7fd146cee735612ea2"
 
-function getFood() {
-  const url = "https://developers.zomato.com/api/v2.1/categories";
-  
- const options = {
+const searchURL = "https://developers.zomato.com/api/v2.1/cities";
+
+
+function formatQueryParams(params) {
+  const queryItems = Object.keys(params)
+    .map(key => `${key}=${params[key]}`)
+  return queryItems.join('&');
+}
+
+function displayResults(responseJson) {
+  console.log(responseJson);
+  $('#results-list').empty();
+  for (let i = 0; i < responseJson.length ; i++){
+    console.log(responseJson[i].name);
+    $('#results-list').append(
+      `<input type="submit" id= "submits" value="${responseJson[i].name}">`
+    )};
+  //display the results section  
+  $('#results').removeClass('hidden');
+};
+
+function getFood(query, maxResults=10) {
+  const params = {
+    q: query,
+  };
+
+  const queryString = formatQueryParams(params)
+  const url = searchURL + '?' + queryString;
+
+  console.log(url, "url");
+
+  const options = {
     headers: new Headers({
       "X-Zomato-API-Key": apiKey})
   };
 
   fetch(url, options)
-    .then(response => response.json())
-    .then(responseJson => console.log(responseJson));
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(response.statusText);
+    })
+    .then(responseJson => displayResults(responseJson.location_suggestions, maxResults))
+    .catch(err => {
+      $('#js-error-message').text(`Something went wrong: ${err.message}`);
+    });
 }
 
-$(getFood);
+function watchForm() {
+  $('form').submit(event => {
+    event.preventDefault();
+    const searchTerm = $('#js-search-term').val();
+    const maxResults = $('#js-max-results').val();
+    getFood(searchTerm, maxResults);
+  });
+}
+
+$(watchForm);
+
+/*write a function that will retrieve the url https://developers.zomato.com/api/v2.1/collections and will use the 
+Id retrieved from the 'cities' search as a parameter
+function handleSubmit()
+  $('#submits').click(function(event) {
+    responseCity();
+  })
+function responseCity()*/
