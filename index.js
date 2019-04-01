@@ -14,12 +14,17 @@ function formatQueryParams(params) {
 function displayResults(responseJson) {
   console.log(responseJson);
   $('#results-list').empty();
+  /*let i = 0;
+  const cities = Object.keys(responseJson[i]).map(function(city) {
+    return `<li><h3>${responseJson[city]}</h3></li>`;
+  });
+  console.log(cities);*/
   for (let i = 0; i < responseJson.length ; i++){
-    console.log(responseJson[i].name);
+    console.log(responseJson[i].name, "name of city");
     $('#results-list').append(
-      `<input type="submit" id= "submits" value="${responseJson[i].name}">`
+      `<button type="button" id= "submits" value="${responseJson[i].id}">${responseJson[i].name}</button>`
     )};
-  //display the results section  
+  //display the results section
   $('#results').removeClass('hidden');
 };
 

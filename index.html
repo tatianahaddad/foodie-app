@@ -10,22 +10,22 @@
 </head>
 <body>
     <div class="container">
-        <h1>Foodie Finder</h1>
-        <h2>Find your new favorite spot, enter your city to begin!</h2>
+      <h1>Foodie Finder</h1>
+      <h2>Find your new favorite spot, enter your city to begin!</h2>
 
-        <form id="js-form">
-            <label for="search-term"></label>
-            <input type="text" name="search-term" placeholder="City" id="js-search-term" required>
+      <form id="js-form">
+        <label for="search-term"></label>
+        <input type="text" name="search-term" placeholder="City" id="js-search-term" required>
 
-            <input type="submit" value="Go!">
+        <input type="submit" value="Go!">
+      </form>
+
+      <p id="js-error-message" class="error-message"></p>
+      <section id="results" class="hidden">
+        <h2>Choose your prefered location</h2>
+        <form id="results-list">
         </form>
-
-        <p id="js-error-message" class="error-message"></p>
-        <section id="results" class="hidden">
-          <h2>Choose your prefered location</h2>
-          <form id="results-list">
-          </form>
-        </section>
+      </section>
     </div>
     <script src="index.js"></script>
 </body>
