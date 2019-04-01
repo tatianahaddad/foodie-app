@@ -11,21 +11,11 @@
 <body>
     <div class="container">
         <h1>Foodie Finder</h1>
-        <h2>Find your new favorite spot!</h2>
+        <h2>Find your new favorite spot, enter your city to begin!</h2>
 
         <form id="js-form">
             <label for="search-term"></label>
-            <input type="text" name="search-term" id="js-search-term" required>
-
-            <select name="search-parameter" id="js-search-type" required>
-              <option value="0">Select</option>
-              <option value="1">Category</option>
-              <option value="2">Cuisine</option>
-              <option value="3">Location</option>
-            </select>
-
-            <label for="max-results">Maximum results</label>
-            <input type="number" name="max-results" id="js-max-results" value="20">
+            <input type="text" name="search-term" placeholder="City" id="js-search-term" required>
 
             <input type="submit" value="Go!">
         </form>
