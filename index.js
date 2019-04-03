@@ -74,8 +74,25 @@ function formatIdParams(idSearch) {
   const queryId = Object.keys(idSearch).map(key => `${key}=${idSearch[key]}`);
   return queryId.join("&");
 }
+function displayCollections(responseJsonCollections) {
+  console.log(responseJsonCollections);
+  // $("#results-list").empty();
+  $("#collection-list").empty();
+  for (let i = 0; i < responseJsonCollections.length; i++) {
+    console.log(responseJsonCollections[i].collection, "name of city");
+    $("#collection-list").append(
+      `<h2>${responseJsonCollections[i].collection.description}</h2>
+      <img src="${responseJsonCollections[i].collection.image_url}">
+      <a href="${responseJsonCollections[i].collection.url}">${responseJsonCollections[i].collection.url}</a>`
+    );
+  }
+  //display the results section
+  $("#collection-results").removeClass("hidden");
+}
+
+
 // $(watchForm);
-function getFood (cityId) {
+function getFood (cityId, maxResults = 10) {
   const idSearch = {
     city_id : cityId
   };
@@ -98,7 +115,7 @@ function getFood (cityId) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson =>(console.log(responseJson))
+    .then(responseJsonCollections =>displayCollections(responseJsonCollections.collections, maxResults)
     )
     .catch(err => {
       $("#js-error-message").text(`Something went wrong: ${err.message}`);
