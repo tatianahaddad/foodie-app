@@ -6,33 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Foodie App</title>
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="container">
+<body> 
+  <div id="container">
+    <div class="blur">
       <h1>Foodie Finder</h1>
       <h2>Find your new favorite spot, enter your city to begin!</h2>
+  </div>
+  <form id="js-form">
+    <label for="search-term">
+    <input type="text" name="search-term" placeholder="City" id="js-search-term" required>
+    </label>
+    <input type="submit" id='js-submit' value="Go!">
+  </form>
 
-      <form id="js-form">
-        <label for="search-term">
-        <input type="text" name="search-term" placeholder="City" id="js-search-term" required>
-        <span class="error" aria-live="polite"></span>
-        </label>
-        <input type="submit" value="Go!">
-      </form>
+  <section id="results" class="hidden">
+    <h2 id="header" class="hidden-one">Choose your prefered location</h2>
+    <form id="results-list">
+    </form>
+  </section>
+  <p id="js-error-message" class="error-message"></p>
+  <section id="collection-results" class="hidden">
+    <div id="collection-list">
 
-      <section id="results" class="hidden">
-        <h2 id="header" class="hidden-one">Choose your prefered location</h2>
-        <form id="results-list">
-        </form>
-      </section>
-      <p id="js-error-message" class="error-message"></p>
-      <section id="collection-results" class="hidden">
-        <div id="collection-list">
-
-        </div>
-      </section>
     </div>
-    <script src="index.js"></script>
+    </section>
+</div>
+  <script src="index.js"></script>
 </body>
+<footer role="contentinfo">&copy; Tatiana Haddad 2019</footer>
 </html>

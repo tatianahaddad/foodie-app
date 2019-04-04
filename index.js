@@ -13,18 +13,13 @@ function displayResults(responseJson) {
   console.log(responseJson);
   $("#js-error-message").empty();
   $("#results-list").empty();
-  /*let i = 0;
-  const cities = Object.keys(responseJson[i]).map(function(city) {
-    return `<li><h3>${responseJson[city]}</h3></li>`;
-  });
-  console.log(cities);*/
   for (let i = 0; i < responseJson.length; i++) {
     $("#results-list").append(
-      `<button type="button" data-id="${responseJson[i].id}">${
-        responseJson[i].name
-      }</button>`
+      `<button type="button" class="button" data-id="${responseJson[i].id}">${
+        responseJson[i].name}</button>`
     );
   }
+
   //display the results section
   $("#results").removeClass("hidden");
   $("#header").removeClass("hidden-one");
@@ -71,7 +66,7 @@ function getCity(query, maxResults = 10) {
 }
 
 function watchForm() {
-  $("form").submit(event => {
+  $("form").on('click', '#js-submit', function() {
     event.preventDefault();
     const searchTerm = $("#js-search-term").val();
     const maxResults = $("#js-max-results").val();
