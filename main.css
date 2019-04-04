@@ -17,3 +17,7 @@ h1, h2 {
 .hidden {
   display: none;
 }
+
+.hidden-one {
+  display: none;
+}

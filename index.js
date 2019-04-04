@@ -11,6 +11,7 @@ function formatQueryParams(params) {
 
 function displayResults(responseJson) {
   console.log(responseJson);
+  $("#js-error-message").empty();
   $("#results-list").empty();
   /*let i = 0;
   const cities = Object.keys(responseJson[i]).map(function(city) {
@@ -18,7 +19,6 @@ function displayResults(responseJson) {
   });
   console.log(cities);*/
   for (let i = 0; i < responseJson.length; i++) {
-    console.log(responseJson[i].name, "name of city");
     $("#results-list").append(
       `<button type="button" data-id="${responseJson[i].id}">${
         responseJson[i].name
@@ -26,6 +26,14 @@ function displayResults(responseJson) {
     );
   }
   //display the results section
+  $("#results").removeClass("hidden");
+  $("#header").removeClass("hidden-one");
+
+}
+
+function errorCity() {
+  $("#results-list").empty();
+  $("#results-list").append(`<h3>Sorry, no results were found for that city. Please try again</h3>`);
   $("#results").removeClass("hidden");
 }
 
@@ -52,11 +60,13 @@ function getCity(query, maxResults = 10) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson =>
-      displayResults(responseJson.location_suggestions, maxResults)
-    )
-    .catch(err => {
-      $("#js-error-message").text(`Something went wrong: ${err.message}`);
+    .then(responseJson => {
+      if (Object.keys(responseJson.location_suggestions).length !== 0) {
+        return displayResults(responseJson.location_suggestions, maxResults);
+      }
+      if (Object.keys(responseJson.location_suggestions).length === 0) {
+        return errorCity();
+      }
     });
 }
 
@@ -76,12 +86,12 @@ function formatIdParams(idSearch) {
 }
 function displayCollections(responseJsonCollections) {
   console.log(responseJsonCollections);
-  // $("#results-list").empty();
+  $("#js-error-message").empty();
   $("#collection-list").empty();
   for (let i = 0; i < responseJsonCollections.length; i++) {
-    console.log(responseJsonCollections[i].collection, "name of city");
     $("#collection-list").append(
-      `<h2>${responseJsonCollections[i].collection.description}</h2>
+      `<h2>${responseJsonCollections[i].collection.title}</h2>
+      <h2>${responseJsonCollections[i].collection.description}</h2>
       <img src="${responseJsonCollections[i].collection.image_url}">
       <a href="${responseJsonCollections[i].collection.url}">${responseJsonCollections[i].collection.url}</a>`
     );
@@ -90,8 +100,6 @@ function displayCollections(responseJsonCollections) {
   $("#collection-results").removeClass("hidden");
 }
 
-
-// $(watchForm);
 function getFood (cityId, maxResults = 10) {
   const idSearch = {
     city_id : cityId
@@ -118,7 +126,7 @@ function getFood (cityId, maxResults = 10) {
     .then(responseJsonCollections =>displayCollections(responseJsonCollections.collections, maxResults)
     )
     .catch(err => {
-      $("#js-error-message").text(`Something went wrong: ${err.message}`);
+      $("#js-error-message").text(`No results found, try a different location!`);
     });
 }
 // write a function that will handle the submit and retrieve the id from the city selected
