@@ -74,64 +74,70 @@ function watchForm() {
   });
 }
 
-function formatIdParams(idSearch) {
-  console.log("working search");
-  const queryId = Object.keys(idSearch).map(key => `${key}=${idSearch[key]}`);
-  return queryId.join("&");
-}
-function displayCollections(responseJsonCollections) {
-  console.log(responseJsonCollections);
+function displayRestaurants(responseJsonRestaurants) {
+  console.log(responseJsonRestaurants, "response text");
   $("#js-error-message").empty();
   $("#collection-list").empty();
-  for (let i = 0; i < responseJsonCollections.length; i++) {
+  for (let i = 0; i < responseJsonRestaurants.length; i++) {
     $("#collection-list").append(
-      `<h2>${responseJsonCollections[i].collection.title}</h2>
-      <h2>${responseJsonCollections[i].collection.description}</h2>
-      <img src="${responseJsonCollections[i].collection.image_url}">
-      <a href="${responseJsonCollections[i].collection.url}">${responseJsonCollections[i].collection.url}</a>`
+      `<h2>${responseJsonRestaurants[i].restaurant.name}</h2>
+      <h2>${responseJsonRestaurants[i].name}</h2>
+      <img src="${responseJsonRestaurants[i].name}">
+      <a href="${responseJsonRestaurants[i].name}">${responseJsonRestaurants[i].collection.url}</a>`
     );
   }
   //display the results section
   $("#collection-results").removeClass("hidden");
 }
 
-function getFood (cityId, maxResults = 10) {
+function formatIdParams(idSearch) {
+  console.log("working search");
+  const queryId = Object.keys(idSearch).map(key => `${key}=${idSearch[key]}`);
+  return queryId.join("&");
+}
+
+function getFood (entity_id, maxResults = 10) {
   const idSearch = {
-    city_id : cityId
+    "entity_id" : entity_id,
+    "entity_type" : "city"
   };
 
   const idQuery = formatIdParams(idSearch);
-  const urlSearch = searchURL +  'collections' + '?' + idQuery;
+  const urlSearch = searchURL +  'search' + '?' + idQuery;
 
   console.log(urlSearch, "url");
 
-  const options = {
-    headers: new Headers({
-      "X-Zomato-API-Key": apiKey
-    })
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var myObj = JSON.parse(this.responseText);
+        displayRestaurants(myObj);
+        /*displayCollections(this.responseText);*/
+     }
   };
-
-    fetch(urlSearch, options)
-    .then(response => {
+  xhttp.open("GET", urlSearch, true);
+  xhttp.setRequestHeader("X-Zomato-API-Key", apiKey);
+  xhttp.send();
+    /*.then(response => {
       if (response.ok) {
         return response.json();
       }
       throw new Error(response.statusText);
     })
-    .then(responseJsonCollections =>displayCollections(responseJsonCollections.collections, maxResults)
+    .then(responseJsonRestaurants =>displayCollections(responseJsonRestaurants.restaurants, maxResults)
     )
     .catch(err => {
       $("#js-error-message").text(`No results found, try a different location!`);
-    });
+    });*/
 }
 // write a function that will handle the submit and retrieve the id from the city selected
 function handleSelectCity() {
   console.log("running");
   $("#results-list").on("click", "button", function() {
     console.log("clicked");
-    const cityId = $(this).data("id");
-    console.log(cityId);
-    getFood(cityId);
+    const entity_id = $(this).data("id");
+    console.log(entity_id);
+    getFood(entity_id);
   });
 }
 // write a function that will retrieve the url https://developers.zomato.com/api/v2.1/collections and will use the
