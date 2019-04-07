@@ -16,7 +16,7 @@ function displayResults(responseJson) {
   for (let i = 0; i < responseJson.length; i++) {
     $("#results-list").append(
       `<button type="button" class="button" data-id="${responseJson[i].id}">${
-        responseJson[i].name}</button>`
+        responseJson[i].name}<a href="results-button"></a></button>`
     );
   }
 
@@ -44,7 +44,8 @@ function getCity(query, maxResults = 10) {
 
   const options = {
     headers: new Headers({
-      "X-Zomato-API-Key": apiKey
+      "X-Zomato-API-Key": apiKey,
+      "Content-Type": "text/html",
     })
   };
 
@@ -75,19 +76,21 @@ function watchForm() {
 }
 
 function displayRestaurants(responseJsonRestaurants) {
-  console.log(responseJsonRestaurants, "response text");
+  console.log(responseJsonRestaurants.restaurants, "response text");
   $("#js-error-message").empty();
   $("#collection-list").empty();
-  for (let i = 0; i < responseJsonRestaurants.length; i++) {
+  for (let i = 0; i < responseJsonRestaurants.restaurants.length; i++) {
     $("#collection-list").append(
-      `<h2>${responseJsonRestaurants[i].restaurant.name}</h2>
-      <h2>${responseJsonRestaurants[i].name}</h2>
-      <img src="${responseJsonRestaurants[i].name}">
-      <a href="${responseJsonRestaurants[i].name}">${responseJsonRestaurants[i].collection.url}</a>`
+      `<h2 class="res-name">${responseJsonRestaurants.restaurants[i].restaurant.name}</h2>
+      <h3>${responseJsonRestaurants.restaurants[i].restaurant.cuisines}</h3>
+      <a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><img src="${responseJsonRestaurants.restaurants[i].restaurant.featured_image}" alt="Picture of ${responseJsonRestaurants.restaurants[i].restaurant.name}"></a>
+      <h4>${responseJsonRestaurants.restaurants[i].restaurant.location.address}</h4>
+      <a class="url" href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}">${responseJsonRestaurants.restaurants[i].restaurant.events_url}</a>`
     );
   }
   //display the results section
   $("#collection-results").removeClass("hidden");
+
 }
 
 function formatIdParams(idSearch) {
@@ -107,16 +110,18 @@ function getFood (entity_id, maxResults = 10) {
 
   console.log(urlSearch, "url");
 
+
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         var myObj = JSON.parse(this.responseText);
         displayRestaurants(myObj);
-        /*displayCollections(this.responseText);*/
      }
   };
   xhttp.open("GET", urlSearch, true);
   xhttp.setRequestHeader("X-Zomato-API-Key", apiKey);
+  xhttp.getResponseHeader('Content-Type', 'text/html');
+  xhttp.getResponseHeader('X-Content-Type-Options: nosniff');
   xhttp.send();
     /*.then(response => {
       if (response.ok) {

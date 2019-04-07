@@ -2,12 +2,11 @@
   font-family: 'Barlow Semi Condensed', sans-serif;
 }
 @media screen and (min-width: 320px) {
-  body {
-    background: url(images/cupcake.jpg) no-repeat center;
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover; 
+  html {
+    background: url(images/cupcake.jpg) fixed;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size: cover;
   }
   
   h1, h2 {
@@ -17,10 +16,55 @@
     font-weight: bold;
   }
 
+  h3, h4 {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin: 20px;
+  }
+  .url {
+    color: white;
+    font-weight: bold;
+    /*margin: 20px;*/
+  }
+  .res-name {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin: 150px 20px 20px 20px;
+    
+  }
+
   #js-form {
     margin-top: 250px;
     margin-bottom: 100px;
     text-align: center;
+  }
+  ::-webkit-input-placeholder {
+    text-align: center;
+ }
+  #js-search-term {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    font-size: 20px;
+    height: 100px;
+    width: 200px;
+    border-radius: 2em;
+  }
+  #js-submit {
+    display: block;
+    margin: auto;
+    width: 100px;
+    background: white;
+    margin-top: 10px;
+    font-size: 20px;
+    height: 100px;
+    width: 200px;
+    border-radius: 2em;
+  }
+  .block-anchor {
+    display: block;
   }
 
   #results-list {
@@ -36,6 +80,10 @@
     height: 100px;
     width: 200px;
     border-radius: 2em;
+  }
+
+  img {
+    width: 100%;
   }
 
   .hidden {
