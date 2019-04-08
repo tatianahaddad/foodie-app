@@ -32,7 +32,7 @@ function errorCity() {
   $("#results").removeClass("hidden");
 }
 
-function getCity(query, maxResults = 10) {
+function getCity(query) {
   const params = {
     q: query
   };
@@ -58,7 +58,7 @@ function getCity(query, maxResults = 10) {
     })
     .then(responseJson => {
       if (Object.keys(responseJson.location_suggestions).length !== 0) {
-        return displayResults(responseJson.location_suggestions, maxResults);
+        return displayResults(responseJson.location_suggestions);
       }
       if (Object.keys(responseJson.location_suggestions).length === 0) {
         return errorCity();
@@ -70,8 +70,9 @@ function watchForm() {
   $("form").on('click', '#js-submit', function() {
     event.preventDefault();
     const searchTerm = $("#js-search-term").val();
-    const maxResults = $("#js-max-results").val();
-    getCity(searchTerm, maxResults);
+    getCity(searchTerm);
+    $("#js-search-term").val('');
+
   });
 }
 
@@ -81,11 +82,12 @@ function displayRestaurants(responseJsonRestaurants) {
   $("#collection-list").empty();
   for (let i = 0; i < responseJsonRestaurants.restaurants.length; i++) {
     $("#collection-list").append(
-      `<h2 class="res-name">${responseJsonRestaurants.restaurants[i].restaurant.name}</h2>
-      <h3>${responseJsonRestaurants.restaurants[i].restaurant.cuisines}</h3>
-      <a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><img src="${responseJsonRestaurants.restaurants[i].restaurant.featured_image}" alt="Picture of ${responseJsonRestaurants.restaurants[i].restaurant.name}"></a>
-      <h4>${responseJsonRestaurants.restaurants[i].restaurant.location.address}</h4>
-      <a class="url" href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}">${responseJsonRestaurants.restaurants[i].restaurant.events_url}</a>`
+      `<div class="results-border">
+        <h2 class="res-name">${responseJsonRestaurants.restaurants[i].restaurant.name}</h2>
+        <h3>${responseJsonRestaurants.restaurants[i].restaurant.cuisines}</h3>
+        <a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><img src="${responseJsonRestaurants.restaurants[i].restaurant.featured_image}" alt="Picture of ${responseJsonRestaurants.restaurants[i].restaurant.name}"></a>
+        <h4 class="bottom-link">${responseJsonRestaurants.restaurants[i].restaurant.location.address}</h4>
+      </div>`
     );
   }
   //display the results section
