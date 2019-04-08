@@ -3,7 +3,8 @@
 }
 @media screen and (min-width: 320px) {
   html {
-    background: url(images/cupcake.jpg) fixed;
+    background: rgba(0,0,0,-0.1) url(images/cupcake.jpg) fixed;
+    background-position: center center;
     background-repeat:no-repeat;
     background-position:center;
     background-size: cover;
@@ -12,7 +13,7 @@
   h1, h2 {
     text-align: center;
     color: white;
-    margin: 100px 50px 150px;
+    margin: 50px 50px 150px;
     font-weight: bold;
   }
 
@@ -97,5 +98,15 @@
   footer {
     color: white;
     text-align: center;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  html {
+    background: url(images/cupcake.jpg) fixed;
+    background-position: center center;
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size: cover;
   }
 }
