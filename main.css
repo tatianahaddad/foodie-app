@@ -3,21 +3,23 @@
 }
 @media screen and (min-width: 320px) {
   html {
-    background: rgba(0,0,0,-0.1) url(images/cupcake.png) fixed;
+    background: rgba(0,0,0,-0.1) url(images/cutting-board.jpg) fixed;
     background-position: center center;
     background-repeat:no-repeat;
     background-position:center;
     background-size: cover;
   }
 
-  .blurred {
-    filter: blur(13px);
+  #main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   
   h1, h2 {
     text-align: center;
-    color: white;
-    margin: 50px 50px 150px;
+    color: black;
+    margin: 50px 50px 50px;
     font-weight: bold;
   }
 
@@ -38,7 +40,7 @@
     text-align: center;
     color: black;
     font-weight: bold;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
   }
 
   #js-form {
@@ -79,8 +81,10 @@
     align-items: center;
   }
 
-  .results-design {
-    margin-bottom: 10px;
+  .results-border {
+    border: 2px white solid;
+    border-radius: 2em;
+    margin-bottom: 30px;
   }
 
   .results-design {
@@ -90,15 +94,15 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    background: url(images/blur-image.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
     width: 95%;
   }
 
+  a {
+    text-decoration: none;
+    cursor: pointer;
+  }
   .res-name {
+    text-decoration: none;
     font-size: 30px;
     text-align: center;
     color: black;
@@ -132,7 +136,7 @@
   }
 
   footer {
-    color: white;
+    color: black;
     text-align: center;
   }
 }
@@ -140,12 +144,12 @@
 @media screen and (min-width: 800px) {
   h1 {
     text-align: center;
-    color: white;
+    color: black;
     margin: 50px 50px 100px;
     font-weight: bold;
   }
   #js-form {
-    margin-top: 325px;
+    margin-top: 100px;
     margin-bottom: 15px;
     text-align: center;
   }
@@ -171,8 +175,8 @@
 
   h2 {
     text-align: center;
-    color: white;
-    margin: 20px 50px 50px;
+    color: black;
+    margin: 20px 50px 60px;
     font-weight: bold;
   }
 
@@ -200,6 +204,10 @@
     border-radius: 2em;
   }
 
+  .results-border {
+    border: 0em;
+  }
+
   .results-design {
     padding: 12px;
     margin-top: 25px;
@@ -207,12 +215,11 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    background: url(images/cutting-board.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
     width: 95%;
+  }
+
+  .bottom-link {
+    margin-bottom: 100px;
   }
 
 }

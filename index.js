@@ -28,7 +28,7 @@ function displayResults(responseJson) {
 
 function errorCity() {
   $("#results-list").empty();
-  $("#results-list").append(`<h3>Sorry, no results were found for that city. Please try again</h3>`);
+  $("#results-list").append(`<h3>Sorry, no results were found. Please try again</h3>`);
   $("#results").removeClass("hidden");
 }
 
@@ -42,14 +42,46 @@ function getCity(query) {
 
   console.log(url, "url");
 
-  const options = {
+  /*const options = {
     headers: new Headers({
       "X-Zomato-API-Key": apiKey,
       "Content-Type": "text/html",
     })
-  };
+  };*/
 
-  fetch(url, options)
+  (function() {
+    var cors_api_host = 'cors-anywhere.herokuapp.com';
+    var cors_api_url = 'https://' + cors_api_host + '/';
+    var slice = [].slice;
+    var origin = window.location.protocol + '//' + window.location.host;
+    var open = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function() {
+        var args = slice.call(arguments);
+        var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
+        if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
+            targetOrigin[1] !== cors_api_host) {
+            args[1] = cors_api_url + args[1];
+        }
+        return open.apply(this, args);
+    };
+})();
+
+
+var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var myObject = JSON.parse(this.responseText);
+        displayResults(myObject.location_suggestions);
+     }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.setRequestHeader("X-Zomato-API-Key", apiKey);
+  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhttp.setRequestHeader("accept", "application/json");
+  xhttp.send();
+
+
+  /*fetch(url, options)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -63,7 +95,7 @@ function getCity(query) {
       if (Object.keys(responseJson.location_suggestions).length === 0) {
         return errorCity();
       }
-    });
+    });*/
 }
 
 function watchForm() {
@@ -83,7 +115,7 @@ function displayRestaurants(responseJsonRestaurants) {
   for (let i = 0; i < responseJsonRestaurants.restaurants.length; i++) {
     $("#collection-list").append(
       `<div class="results-border">
-        <h2 class="res-name">${responseJsonRestaurants.restaurants[i].restaurant.name}</h2>
+      <a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><h2 class="res-name">${responseJsonRestaurants.restaurants[i].restaurant.name}</h2>
         <h3>${responseJsonRestaurants.restaurants[i].restaurant.cuisines}</h3>
         <a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><img src="${responseJsonRestaurants.restaurants[i].restaurant.featured_image}" alt="Picture of ${responseJsonRestaurants.restaurants[i].restaurant.name}"></a>
         <h4 class="bottom-link">${responseJsonRestaurants.restaurants[i].restaurant.location.address}</h4>
@@ -101,7 +133,7 @@ function formatIdParams(idSearch) {
   return queryId.join("&");
 }
 
-function getFood (entity_id, maxResults = 10) {
+function getFood (entity_id) {
   const idSearch = {
     "entity_id" : entity_id,
     "entity_type" : "city"
@@ -111,6 +143,23 @@ function getFood (entity_id, maxResults = 10) {
   const urlSearch = searchURL +  'search' + '?' + idQuery;
 
   console.log(urlSearch, "url");
+
+  (function() {
+    var cors_api_host = 'cors-anywhere.herokuapp.com';
+    var cors_api_url = 'https://' + cors_api_host + '/';
+    var slice = [].slice;
+    var origin = window.location.protocol + '//' + window.location.host;
+    var open = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function() {
+        var args = slice.call(arguments);
+        var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
+        if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
+            targetOrigin[1] !== cors_api_host) {
+            args[1] = cors_api_url + args[1];
+        }
+        return open.apply(this, args);
+    };
+})();
 
 
   var xhttp = new XMLHttpRequest();
@@ -122,19 +171,24 @@ function getFood (entity_id, maxResults = 10) {
   };
   xhttp.open("GET", urlSearch, true);
   xhttp.setRequestHeader("X-Zomato-API-Key", apiKey);
-  xhttp.getResponseHeader('Content-Type', 'text/html');
-  xhttp.getResponseHeader('X-Content-Type-Options: nosniff');
+  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhttp.setRequestHeader("accept", "application/json");
   xhttp.send();
-    /*.then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.statusText);
-    })
-    .then(responseJsonRestaurants =>displayCollections(responseJsonRestaurants.restaurants, maxResults)
-    )
-    .catch(err => {
-      $("#js-error-message").text(`No results found, try a different location!`);
+
+  /*$.ajax({
+    type: 'GET',
+    url: urlSearch,
+    headers: {
+      "X-Zomato-API-Key": apiKey,
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    proxy: {
+      host: '104.236.174.88',
+      port: 3128
+    },
+    dataType: 'json'
+    }).done(function(data) {
+      displayRestaurants(data);
     });*/
 }
 // write a function that will handle the submit and retrieve the id from the city selected
@@ -147,9 +201,6 @@ function handleSelectCity() {
     getFood(entity_id);
   });
 }
-// write a function that will retrieve the url https://developers.zomato.com/api/v2.1/collections and will use the
-// id retrieved from the 'cities' search as a parameter
-
 
 
 $(function() {
