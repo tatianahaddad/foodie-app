@@ -3,6 +3,8 @@
 }
 @media screen and (min-width: 320px) {
   html {
+    display: flex;
+    justify-content: center;
     background: rgba(0,0,0,-0.1) url(images/cutting-board.jpg) fixed;
     background-position: center center;
     background-repeat:no-repeat;
@@ -112,6 +114,7 @@
   }
 
   .button {
+    background-color: white;
     margin-top: 10px;
     font-size: 20px;
     height: 70px;
@@ -142,6 +145,9 @@
 }
 
 @media screen and (min-width: 800px) {
+  html {
+    display: inline-block;
+  }
   h1 {
     text-align: center;
     color: black;

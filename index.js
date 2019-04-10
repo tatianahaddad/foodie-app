@@ -42,13 +42,6 @@ function getCity(query) {
 
   console.log(url, "url");
 
-  /*const options = {
-    headers: new Headers({
-      "X-Zomato-API-Key": apiKey,
-      "Content-Type": "text/html",
-    })
-  };*/
-
   (function() {
     var cors_api_host = 'cors-anywhere.herokuapp.com';
     var cors_api_url = 'https://' + cors_api_host + '/';
@@ -66,7 +59,7 @@ function getCity(query) {
     };
 })();
 
-
+// proxy to remove CORB
 var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -84,23 +77,6 @@ var xhttp = new XMLHttpRequest();
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhttp.setRequestHeader("accept", "application/json");
   xhttp.send();
-
-
-  /*fetch(url, options)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error(response.statusText);
-    })
-    .then(responseJson => {
-      if (Object.keys(responseJson.location_suggestions).length !== 0) {
-        return displayResults(responseJson.location_suggestions);
-      }
-      if (Object.keys(responseJson.location_suggestions).length === 0) {
-        return errorCity();
-      }
-    });*/
 }
 
 function watchForm() {
@@ -149,6 +125,7 @@ function getFood (entity_id) {
 
   console.log(urlSearch, "url");
 
+  // proxy to remove CORB
   (function() {
     var cors_api_host = 'cors-anywhere.herokuapp.com';
     var cors_api_url = 'https://' + cors_api_host + '/';
@@ -179,24 +156,8 @@ function getFood (entity_id) {
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhttp.setRequestHeader("accept", "application/json");
   xhttp.send();
-
-  /*$.ajax({
-    type: 'GET',
-    url: urlSearch,
-    headers: {
-      "X-Zomato-API-Key": apiKey,
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    proxy: {
-      host: '104.236.174.88',
-      port: 3128
-    },
-    dataType: 'json'
-    }).done(function(data) {
-      displayRestaurants(data);
-    });*/
 }
-// write a function that will handle the submit and retrieve the id from the city selected
+// function that will handle the submit and retrieve the data id from the city selected
 function handleSelectCity() {
   console.log("running");
   $("#results-list").on("click", "button", function() {
@@ -212,5 +173,4 @@ $(function() {
   console.log("ready!");
   watchForm();
   handleSelectCity();
-  // getFood(handleSelectCity());
 });
