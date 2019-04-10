@@ -3,12 +3,14 @@
 }
 @media screen and (min-width: 320px) {
   html {
+    display: flex;
+    justify-content: center;
     background: rgba(0,0,0,-0.1) url(images/cutting-board-one.jpg) fixed;
     background-position: center center;
     background-repeat:no-repeat;
     background-position:center;
     background-size: cover;
-    height: 100%;
+    height: fit-content;
   }
 
   #main {
@@ -145,6 +147,7 @@
 
 @media screen and (min-width: 800px) {
   html {
+    display: inline-block;
     background: rgba(0,0,0,-0.1) url(images/cutting-board.jpg) fixed;
     background-position: center center;
     background-repeat:no-repeat;
