@@ -28,13 +28,13 @@ function displayResults(responseJson) {
 
 function errorCity() {
   $("#results-list").empty();
-  $("#results-list").append(`<h3>Sorry, no results were found. Please try again</h3>`);
+  $("#results-list").append(`<h3 class="no-results">Sorry, no results were found. Please try again</h3>`);
   $("#results").removeClass("hidden");
 }
 
 function errorResults() {
   $("#results-list").empty();
-  $("#results-list").append(`<h3>Sorry, no results were found. Error 400. Please try again</h3>`);
+  $("#results-list").append(`<h3 class="no-results">Sorry, no results were found. Error 400. Please try again</h3>`);
   $("#results").removeClass("hidden");
 }
 

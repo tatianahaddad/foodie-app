@@ -38,6 +38,14 @@
     margin: 20px;
   }
 
+  .no-results {
+    font-size: 25px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin: 20px;
+  }
+
   .bottom-link {
     font-size: 23px;
     text-align: center;
