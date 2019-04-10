@@ -69,10 +69,15 @@ function getCity(query) {
 
 var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        var myObject = JSON.parse(this.responseText);
-        displayResults(myObject.location_suggestions);
-     }
+    if (this.readyState == 4 && this.status == 200) {
+      var myObject = JSON.parse(this.responseText);
+      if (Object.keys(myObject.location_suggestions).length !== 0) {
+        return displayResults(myObject.location_suggestions);
+      }
+      if (Object.keys(myObject.location_suggestions).length === 0) {
+        return errorCity();
+      }
+    }
   };
   xhttp.open("GET", url, true);
   xhttp.setRequestHeader("X-Zomato-API-Key", apiKey);
