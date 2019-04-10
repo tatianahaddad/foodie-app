@@ -32,6 +32,12 @@ function errorCity() {
   $("#results").removeClass("hidden");
 }
 
+function errorResults() {
+  $("#results-list").empty();
+  $("#results-list").append(`<h3>Sorry, no results were found. Error 400. Please try again</h3>`);
+  $("#results").removeClass("hidden");
+}
+
 function getCity(query) {
   const params = {
     q: query
@@ -70,6 +76,9 @@ var xhttp = new XMLHttpRequest();
       if (Object.keys(myObject.location_suggestions).length === 0) {
         return errorCity();
       }
+    }
+    if (this.status == 400) {
+      return errorResults();
     }
   };
   xhttp.open("GET", url, true);

@@ -47,7 +47,8 @@
   }
 
   #js-form {
-    margin-top: 250px;
+    margin-top: 100px;
+    margin-bottom: 50px;
     text-align: center;
   }
   ::-webkit-input-placeholder {
@@ -89,7 +90,7 @@
     border: 2px white solid;
     border-radius: 2em;
     margin-bottom: 30px;
-    background-color: #FFB30F;
+    background-color: #E5C940;
   }
 
   .results-design {
