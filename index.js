@@ -10,12 +10,11 @@ function formatQueryParams(params) {
 }
 
 function displayResults(responseJson) {
-  console.log(responseJson);
   $("#js-error-message").empty();
   $("#results-list").empty();
   for (let i = 0; i < responseJson.length; i++) {
     $("#results-list").append(
-      `<button type="button" class="button" data-id="${responseJson[i].id}">${
+      `<button type="button" data-id="${responseJson[i].id}">${
         responseJson[i].name}<a href="results-button"></a></button>`
     );
   }
@@ -45,8 +44,6 @@ function getCity(query) {
 
   const queryString = formatQueryParams(params);
   const url = searchURL + "cities" + "?" + queryString;
-
-  console.log(url, "url");
 
   (function() {
     var cors_api_host = 'cors-anywhere.herokuapp.com';
@@ -94,12 +91,12 @@ function watchForm() {
     const searchTerm = $("#js-search-term").val();
     getCity(searchTerm);
     $("#js-search-term").val('');
+    $("h2.fav-spot").remove();
 
   });
 }
 
 function displayRestaurants(responseJsonRestaurants) {
-  console.log(responseJsonRestaurants.restaurants, "response text");
   $("#js-error-message").empty();
   $("#collection-list").empty();
   for (let i = 0; i < responseJsonRestaurants.restaurants.length; i++) {
@@ -107,7 +104,9 @@ function displayRestaurants(responseJsonRestaurants) {
       `<div class="results-border">
       <a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><h2 class="res-name">${responseJsonRestaurants.restaurants[i].restaurant.name}</h2>
         <h3>${responseJsonRestaurants.restaurants[i].restaurant.cuisines}</h3>
-        <a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><img src="${responseJsonRestaurants.restaurants[i].restaurant.featured_image}" alt="Picture of ${responseJsonRestaurants.restaurants[i].restaurant.name}"></a>
+        ${responseJsonRestaurants.restaurants[i].restaurant.featured_image ?
+        `<a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><img src="${responseJsonRestaurants.restaurants[i].restaurant.featured_image}" alt="Picture of ${responseJsonRestaurants.restaurants[i].restaurant.name}"></a>`
+        : ''} 
         <h4 class="bottom-link">${responseJsonRestaurants.restaurants[i].restaurant.location.address}</h4>
       </div>`
     );
@@ -118,7 +117,6 @@ function displayRestaurants(responseJsonRestaurants) {
 }
 
 function formatIdParams(idSearch) {
-  console.log("working search");
   const queryId = Object.keys(idSearch).map(key => `${key}=${idSearch[key]}`);
   return queryId.join("&");
 }
@@ -131,8 +129,6 @@ function getFood (entity_id) {
 
   const idQuery = formatIdParams(idSearch);
   const urlSearch = searchURL +  'search' + '?' + idQuery;
-
-  console.log(urlSearch, "url");
 
   // proxy to remove CORB
   (function() {
@@ -168,18 +164,14 @@ function getFood (entity_id) {
 }
 // function that will handle the submit and retrieve the data id from the city selected
 function handleSelectCity() {
-  console.log("running");
   $("#results-list").on("click", "button", function() {
-    console.log("clicked");
     const entity_id = $(this).data("id");
-    console.log(entity_id);
     getFood(entity_id);
   });
 }
 
 
 $(function() {
-  console.log("ready!");
   watchForm();
   handleSelectCity();
 });

@@ -14,7 +14,7 @@
   <div id="container">
     <div id="main">
       <h1>Foodie Finder</h1>
-      <h2>Find your new favorite spot, enter your city to begin!</h2>
+      <h2 class="fav-spot">Find your new favorite spot, enter your city to begin!</h2>
     <form id="js-form">
       <label for="search-term">
       <input type="text" name="search-term" placeholder="City" id="js-search-term" required>
@@ -22,18 +22,19 @@
       <input type="submit" value="Go!" id='js-submit'>
     </form>
     </div>
+  </div>
   <section id="results" class="hidden" aria-live="polite">
     <h2 id="header" class="hidden-one">Choose your prefered location</h2>
     <form id="results-list">
     </form>
   </section>
+
   <p id="js-error-message" class="error-message" aria-live="polite"></p>
   <section id="collection-results" class="hidden results-design">
     <div id="collection-list" aria-live="polite">
 
     </div>
     </section>
-  </div>
   <script src="index.js"></script>
   </main>
 </body>
