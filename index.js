@@ -29,8 +29,7 @@ function errorCity() {
   $("#results-list").empty();
   $("#results-list").append(`<h3 class="no-results">Sorry, no results were found. Please try again</h3>`);
   $("#results").removeClass("hidden");
-  $("#header").toggleClass("hidden-one");
-  
+  $("#header").addClass("hidden-one");
 }
 
 function errorResults() {
@@ -83,8 +82,7 @@ var xhttp = new XMLHttpRequest();
   };
   xhttp.open("GET", url, true);
   xhttp.setRequestHeader("X-Zomato-API-Key", apiKey);
-  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xhttp.setRequestHeader("accept", "application/json");
+  xhttp.setRequestHeader("Accept", "application/json");
   xhttp.send();
 }
 
@@ -131,25 +129,6 @@ function getFood (entity_id) {
 
   const idQuery = formatIdParams(idSearch);
   const urlSearch = searchURL +  'search' + '?' + idQuery;
-
-  // proxy to remove CORB
-  (function() {
-    var cors_api_host = 'cors-anywhere.herokuapp.com';
-    var cors_api_url = 'https://' + cors_api_host + '/';
-    var slice = [].slice;
-    var origin = window.location.protocol + '//' + window.location.host;
-    var open = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function() {
-        var args = slice.call(arguments);
-        var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
-        if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
-            targetOrigin[1] !== cors_api_host) {
-            args[1] = cors_api_url + args[1];
-        }
-        return open.apply(this, args);
-    };
-})();
-
 
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
