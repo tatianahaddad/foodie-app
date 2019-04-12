@@ -29,12 +29,15 @@ function errorCity() {
   $("#results-list").empty();
   $("#results-list").append(`<h3 class="no-results">Sorry, no results were found. Please try again</h3>`);
   $("#results").removeClass("hidden");
+  $("#header").toggleClass("hidden-one");
+  
 }
 
 function errorResults() {
   $("#results-list").empty();
   $("#results-list").append(`<h3 class="no-results">Sorry, no results were found. Error 400. Please try again</h3>`);
   $("#results").removeClass("hidden");
+
 }
 
 function getCity(query) {
@@ -45,6 +48,7 @@ function getCity(query) {
   const queryString = formatQueryParams(params);
   const url = searchURL + "cities" + "?" + queryString;
 
+  // proxy to remove CORB
   (function() {
     var cors_api_host = 'cors-anywhere.herokuapp.com';
     var cors_api_url = 'https://' + cors_api_host + '/';
@@ -62,7 +66,6 @@ function getCity(query) {
     };
 })();
 
-// proxy to remove CORB
 var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -92,7 +95,6 @@ function watchForm() {
     getCity(searchTerm);
     $("#js-search-term").val('');
     $("h2.fav-spot").remove();
-
   });
 }
 
