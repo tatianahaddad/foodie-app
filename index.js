@@ -148,6 +148,7 @@ function handleSelectCity() {
   $("#results-list").on("click", "button", function() {
     const entity_id = $(this).data("id");
     getFood(entity_id);
+    $('.city-entered').append(`Scroll down to see your results!`);
   });
 }
 
