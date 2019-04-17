@@ -101,6 +101,7 @@
   #results-list {
     display: block;
     width: 80%;
+    height: 350px;
     
   }
 
@@ -257,6 +258,12 @@
     width: 90%;
     margin-left:auto;
     margin-right: auto;
+    right: 30px;
+    position: relative;
+  }
+
+  .no-image{
+    height: 100px;
   }
 
   .results-border {
@@ -264,7 +271,9 @@
     background-color: transparent;
     float: right;
     display: inline-block;
-    width: 50%;
+    width: 45%;
+    height: 450px;
+    margin-right: 10px;
   }
 
   .results-design {

@@ -97,18 +97,21 @@ function watchForm() {
 }
 
 function displayRestaurants(responseJsonRestaurants) {
+  $('.city-entered').empty();
   $("#js-error-message").empty();
   $("#collection-list").empty();
   for (let i = 0; i < responseJsonRestaurants.restaurants.length; i++) {
     $("#collection-list").append(
       `<div class="results-border">
-      <a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><h2 class="res-name">${responseJsonRestaurants.restaurants[i].restaurant.name}</h2>
-        <h3>${responseJsonRestaurants.restaurants[i].restaurant.cuisines}</h3>
-        ${responseJsonRestaurants.restaurants[i].restaurant.featured_image ?
-        `<a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><img src="${responseJsonRestaurants.restaurants[i].restaurant.featured_image}" alt="Picture of ${responseJsonRestaurants.restaurants[i].restaurant.name}"></a>`
-        : ''} 
-        <h4 class="bottom-link">${responseJsonRestaurants.restaurants[i].restaurant.location.address}</h4>
-      </div>`
+        <div class="contain">
+          <a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><h2 class="res-name">${responseJsonRestaurants.restaurants[i].restaurant.name}</h2>
+          <h3>${responseJsonRestaurants.restaurants[i].restaurant.cuisines}</h3>
+          ${responseJsonRestaurants.restaurants[i].restaurant.featured_image ?
+          `<a href="${responseJsonRestaurants.restaurants[i].restaurant.events_url}" target="_blank"><img src="${responseJsonRestaurants.restaurants[i].restaurant.featured_image}" alt="Picture of ${responseJsonRestaurants.restaurants[i].restaurant.name}"></a>`
+          : `<div class="no-image"></div>`} 
+          <h4 class="bottom-link">${responseJsonRestaurants.restaurants[i].restaurant.location.address}</h4>
+        </div>
+    </div>`
     );
   }
   //display the results section
@@ -148,7 +151,7 @@ function handleSelectCity() {
   $("#results-list").on("click", "button", function() {
     const entity_id = $(this).data("id");
     getFood(entity_id);
-    $('.city-entered').append(`Scroll down to see your results!`);
+    $('.city-entered').append(`Loading results...`);
   });
 }
 
